@@ -117,6 +117,18 @@ class PriorityQueue {
     bubble_up_();
   }
 
+  void push(T& value) {
+    if (size_ + 1 > alloc_size_) {
+      grow_();
+    }
+
+    data_[size_] = value;
+
+    ++size_;
+
+    bubble_up_();
+  }
+
   template <class... Args>
   void emplace(Args&&... args) {
     push(T(std::forward<Args>(args)...));
@@ -135,15 +147,15 @@ class PriorityQueue {
     rotate_();
   }
 
-  bool empty() noexcept {
+  bool empty() const noexcept {
     return !size_;
   }
 
-  size_t size() noexcept {
+  size_t size() const noexcept {
     return size_;
   }
 
-  T& front() {
+  T& front() const {
     return *data_;
   }
 };
